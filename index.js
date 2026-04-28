@@ -5,6 +5,11 @@ const scene = document.querySelector(".scene");
         const activeSide = cube.dataset.side;
         cube.classList.replace(`show-${activeSide}`, `show-${side}`);
         cube.setAttribute("data-side", side);
+
+        // Update active state on all nav buttons
+        document.querySelectorAll(".btn").forEach((btn) => {
+          btn.classList.toggle("active", btn.dataset.side === side);
+        });
       };
 
       // Check if target is an interactive element
@@ -85,5 +90,12 @@ const scene = document.querySelector(".scene");
         btn.addEventListener("click", (e) => {
           const sideToTurn = e.target.dataset.side;
           clickOnSide(sideToTurn);
+        });
+      });
+
+      // Prevent cube interaction from blocking links
+      document.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.stopPropagation();
         });
       });
